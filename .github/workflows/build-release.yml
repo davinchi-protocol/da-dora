@@ -32,7 +32,7 @@ jobs:
     uses: ./.github/workflows/_shared-docker-clone.yaml
     with:
       source_repository: "avenbreak/dora"
-      target_repository: "pk910/dora-the-explorer"
+      target_repository: "avenbreak/dora"
       tags: "['v${{ inputs.version }}','v${{ inputs.version }}:latest']"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_PK_USERNAME }}

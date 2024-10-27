@@ -1,0 +1,103 @@
+logging:
+  outputLevel: "debug"
+  #outputStderr: false
+
+  filePath: "./explorer.log"
+  #fileLevel: "warn"
+
+# Chain network configuration
+chain:
+  name: "mainnet"
+  genesisTimestamp: 1729568952
+  genesisValidatorsRoot: "0x7fd081efd2e10ca333c734f3a5e79459ff0be301868113703ed3c284adb85aef"
+  configPath: "/root/da-dora/config/davinci-config.yml"
+  displayName: "Mainnet Consensus"
+
+# HTTP Server configuration
+server:
+  host: "0.0.0.0" # Address to listen on
+  port: "8555" # Port to listen on
+
+
+frontend:
+  enabled: true # Enable or disable to web frontend
+  debug: false
+  minimize: false
+  siteName: "Davinci Validator Explorer" # Name of the site, displayed in the title tag
+  siteSubtitle: "Davinci Mainnet"
+  siteDomain: "https://validator-explorer.davinci.bz"
+  ethExplorerLink: "https://mainnet-explorer.davinci.bz"
+  validatorNamesYaml: "/root/da-dora/config/validator_names.yaml"
+  
+beaconapi:
+  # beacon node rpc endpoints
+  endpoints:
+    - name: "lighthouse"
+      url: "https://beacon.davinci.bz"
+      priority: 4
+      archive: true
+#    - name: "lighthouse"
+#      url: "http://10.16.97.2:5052"
+#      priority: 5
+  
+  localCacheSize: 100 # 100MB
+  redisCacheAddr: ""
+  redisCachePrefix: ""
+
+executionapi:
+  # execution node rpc endpoints
+  endpoints:
+    - name: "da-geth"
+      url: "https://rpc.davinci.bz"
+  
+  depositLogBatchSize: 1000
+
+indexer:
+  # max number of epochs to keep in memory
+  inMemoryEpochs: 3
+
+  # disable synchronizing historic data
+  disableSynchronizer: false
+
+  # reset synchronization state to this epoch on startup - only use to resync database, comment out afterwards
+  #resyncFromEpoch: 0
+
+  # force re-synchronization of epochs that are already present in DB - only use to fix missing data after schema upgrades
+  #resyncForceUpdate: true
+
+  # number of seconds to pause the synchronization between each epoch (don't overload CL client)
+  syncEpochCooldown: 2
+
+  # maximum number of parallel beacon state requests (might cause high memory usage)
+  maxParallelValidatorSetRequests: 1
+
+# mevIndexer:
+  # list of mev relays to crawl mev blocks from
+#  relays:
+#    - index: 0  # identifier for this relay in db (0-63)
+#      name: Flashbots
+#      url: https://boost-relay.flashbots.net/
+#  refreshInterval: 10m
+
+# database configuration
+database:
+  engine: "sqlite" # sqlite / pgsql
+
+  # sqlite settings (only used if engine is set to sqlite)
+  sqlite:
+    file: "./tmp-database.sqlite"
+    #file: ":memory:"
+
+  # pgsql settings (only used if engine is set to pgsql)
+  pgsql:
+    host: "10.16.97.2"
+    port: 5432
+    user: "pk910"
+    password: "SBekcBFpRW9rZrVL" # internal dev DB, no worries about password leaking ;)
+    name: "pk910"
+  pgsqlWriter:
+    host: "10.16.97.2"
+    port: 5432
+    user: "pk910"
+    password: "SBekcBFpRW9rZrVL" # internal dev DB, no worries about password leaking ;)
+    name: "pk910"

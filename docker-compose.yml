@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  dora:
+    image: avenbreak/dora:latest
+    container_name: validator-explorer
+    restart: unless-stopped
+    ports:
+      - "8555:8555"
+    volumes:
+      - ./config:/config
+    command:
+      - dora-explorer
+      - --config=/config/explorer-config.yaml
